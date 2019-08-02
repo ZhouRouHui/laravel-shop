@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class UserAddressesController extends Controller
 {
+    /**
+     * get
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         return view('user_addresses.index', [
@@ -15,11 +21,22 @@ class UserAddressesController extends Controller
         ]);
     }
 
+    /**
+     * get
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('user_addresses.create_and_edit', ['address' => new UserAddress()]);
     }
 
+    /**
+     * post
+     *
+     * @param UserAddressRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(UserAddressRequest $request)
     {
         // $request->user() 获取当前登录用户
@@ -37,5 +54,57 @@ class UserAddressesController extends Controller
         ]));
 
         return redirect()->route('user_addresses.index');
+    }
+
+    /**
+     * get
+     *
+     * @param UserAddress $user_address
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function edit(UserAddress $user_address)
+    {
+        $this->authorize('own', $user_address);
+        return view('user_addresses.create_and_edit', ['address' => $user_address]);
+    }
+
+    /**
+     * put
+     *
+     * @param UserAddress $user_address
+     * @param UserAddressRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update(UserAddress $user_address, UserAddressRequest $request)
+    {
+        $this->authorize('own', $user_address);
+        $user_address->update($request->only([
+            'province',
+            'city',
+            'district',
+            'address',
+            'zip',
+            'contact_name',
+            'contact_phone',
+        ]));
+
+        return redirect()->route('user_addresses.index');
+    }
+
+    /**
+     * delete
+     *
+     * @param UserAddress $user_address
+     * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(UserAddress $user_address)
+    {
+        $this->authorize('own', $user_address);
+        $user_address->delete();
+
+        return [];
     }
 }

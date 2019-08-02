@@ -1,3 +1,8 @@
+/**
+ * 引入增加的第三方依赖
+ */
+require('sweetalert');
+
 window._ = require('lodash');
 
 /**
