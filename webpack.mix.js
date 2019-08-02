@@ -11,5 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
+// 自动监听命令 yarn run watch-poll
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .version(); // version()，使 Mix 每次生成的静态文件后面加上一个类似版本号的参数，避免浏览器缓存。
