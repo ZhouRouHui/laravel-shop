@@ -22,6 +22,12 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
+ * 引入自定义的组件
+ */
+require('./components/SelectDistrict');
+require('./components/UserAddressesCreateAndEdit');
+
+/**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
