@@ -13,4 +13,5 @@
 
 Route::get('/', 'PagesController@root')->name('root');
 
-Auth::routes();
+// 加上 verify == true 的参数，系统会自动实现邮箱验证功能
+Auth::routes(['verify' => true]);
