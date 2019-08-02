@@ -36,4 +36,13 @@ class User extends Authenticatable implements MustVerifyEmail   // MustVerifyEma
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * 关联地址
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
 }
