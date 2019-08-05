@@ -106,4 +106,20 @@ class OrdersController extends Controller
 
         return view('orders.index', ['orders' => $orders]);
     }
+
+    /**
+     * 订单详情
+     *
+     * @param Order $order
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Order $order, Request $request)
+    {
+        $this->authorize('own');
+        // 这里的 load() 方法与上一章节介绍的 with() 预加载方法有些类似，称为 延迟预加载，
+        // 不同点在于 load() 是在已经查询出来的模型上调用，而 with() 则是在 ORM 查询构造器上调用
+        return view('orders.show', ['order' => $order->load(['items.productSku', 'items.product'])]);
+    }
 }
