@@ -15,7 +15,6 @@ Route::get('/', 'PagesController@root')->name('root');
 
 Route::redirect('/', '/products')->name('root');
 Route::get('products', 'ProductsController@index')->name('products.index');
-Route::get('products/{product}', 'ProductsController@show')->name('products.show');
 
 // 加上 verify == true 的参数，系统会自动实现邮箱验证功能
 Auth::routes(['verify' => true]);
@@ -30,4 +29,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::delete('user_addresses/{user_address}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+    Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 });
+
+Route::get('products/{product}', 'ProductsController@show')->name('products.show');
