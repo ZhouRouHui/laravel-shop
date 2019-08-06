@@ -37,6 +37,8 @@ class PaymentController extends Controller
 
     /**
      * 前端回调页面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function alipayReturn()
     {
@@ -56,6 +58,8 @@ class PaymentController extends Controller
 
     /**
      * 服务器端回调
+     *
+     * @return string
      */
     public function alipayNotify()
     {
