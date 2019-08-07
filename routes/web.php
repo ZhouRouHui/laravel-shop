@@ -44,15 +44,15 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::get('orders', 'OrdersController@index')->name('orders.index');
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
     Route::post('orders/{order}/received', 'OrdersController@received')->name('orders.received');
+    Route::get('orders/{order}/review', 'OrdersController@review')->name('orders.review.show');
+    Route::post('orders/{order}/review', 'OrdersController@sendReview')->name('orders.review.store');
+    Route::post('orders/{order}/apply_refund', 'OrdersController@applyRefund')->name('orders.apply_refund');
 
     // 支付
     Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
     Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');
     Route::get('payment/{order}/wechat', 'PaymentController@payByWechat')->name('payment.wechat');
 
-    // 评价
-    Route::get('orders/{order}/review', 'OrdersController@review')->name('orders.review.show');
-    Route::post('orders/{order}/review', 'OrdersController@sendReview')->name('orders.review.store');
 });
 
 // ----- 服务器段支付回调 start，回调接口为支付平台调用接口，不可放入有中间件的路由组中 -----
