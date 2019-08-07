@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 // ----- 服务器段支付回调 start，回调接口为支付平台调用接口，不可放入有中间件的路由组中 -----
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
+Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotify')->name('payment.wechat.refund_notify');
 // ----- 服务器段支付回调 end   -----
 
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
