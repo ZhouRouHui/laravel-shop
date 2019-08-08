@@ -45,4 +45,14 @@ class Product extends Model
         // 这里的 public 的参数需要和我们在 config/admin.php 的 upload.disk 配置一致
         return \Storage::disk('public')->url($this->attributes['image']);
     }
+
+    /**
+     * 关联类目
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
