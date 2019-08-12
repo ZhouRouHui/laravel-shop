@@ -23,6 +23,13 @@ class UserAddress extends Model
     ];
 
     /**
+     * 自定义数据库不存在的数据
+     *
+     * @var array
+     */
+    protected $appends = ['full_address'];
+
+    /**
      * 表示 last_used_at 字段是一个时间日期类型，在之后的代码中 $address->last_used_at 返回的就是一个时间日期对象
      * （确切说是 Carbon 对象，Carbon 是 Laravel 默认使用的时间日期处理类）
      * @var array
