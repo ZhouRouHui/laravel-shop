@@ -6,6 +6,7 @@ use App\Exceptions\InvalidRequestException;
 use App\Models\Category;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -14,9 +15,10 @@ class ProductsController extends Controller
      * 商品列表接口
      *
      * @param Request $request
+     * @param CategoryService $categoryService
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request, CategoryService $categoryService)
     {
         /**
          * 这里详细解释一下模糊搜索那段代码，我们这里的实现是先用 $builder->where() 传入一个匿名函数，
@@ -85,7 +87,8 @@ class ProductsController extends Controller
                 'search' => $search,
                 'order' => $order
             ],
-            'category' => $category ?? null // 等价于 isset($category) ? $category : null;
+            'category' => $category ?? null, // 等价于 isset($category) ? $category : null;
+            'categoryTree' => $categoryService->getCategoryTree(),
         ]);
     }
 
