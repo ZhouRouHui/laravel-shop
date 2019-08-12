@@ -7,6 +7,15 @@ use Illuminate\Support\Str;
 
 class Product extends Model
 {
+    // 商品性质类型
+    const TYPE_NORMAL = 'normal';
+    const TYPE_CROWDFUNDING = 'crowdfunding';
+
+    protected static $typeMap = [
+        self::TYPE_NORMAL => '普通商品',
+        self::TYPE_CROWDFUNDING => '众筹商品'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -14,7 +23,8 @@ class Product extends Model
      */
     protected $fillable = [
         'title', 'description', 'image', 'on_sale',
-        'rating', 'sold_count', 'review_count', 'price'
+        'rating', 'sold_count', 'review_count', 'price',
+        'type'
     ];
 
     /**
@@ -54,5 +64,15 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * 关联众筹商品模型
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function crowdfunding()
+    {
+        return $this->hasOne(CrowdfundingProduct::class);
     }
 }
