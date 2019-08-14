@@ -22,6 +22,11 @@ class Category extends Model
         'is_directory' => 'boolean'
     ];
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
     protected static function boot()
     {
         parent::boot();
