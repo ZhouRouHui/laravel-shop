@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\InvalidRequestException;
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\OrderItem;
-use App\Models\Product;
-use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use App\Services\CategoryService;
+use App\Exceptions\InvalidRequestException;
 
 class ProductsController extends Controller
 {

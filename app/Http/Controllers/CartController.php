@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddCartRequest;
 use App\Models\ProductSku;
-use App\Services\CartService;
 use Illuminate\Http\Request;
+use App\Services\CartService;
+use App\Http\Requests\AddCartRequest;
 
 class CartController extends Controller
 {

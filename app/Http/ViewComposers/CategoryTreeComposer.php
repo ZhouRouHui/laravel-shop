@@ -2,8 +2,8 @@
 
 namespace App\Http\ViewComposers;
 
-use App\Services\CategoryService;
 use Illuminate\View\View;
+use App\Services\CategoryService;
 
 class CategoryTreeComposer
 {

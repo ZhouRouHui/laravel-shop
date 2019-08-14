@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\CrowdfundingProduct;
 use App\Models\Product;
 use App\Models\ProductSku;
 use Illuminate\Validation\Rule;
+use App\Models\CrowdfundingProduct;
 
 class CrowdFundingOrderRequest extends Request
 {

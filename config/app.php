@@ -125,9 +125,6 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    // 订单超时时间
-    'order_ttl' => 1800,
-
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -236,6 +233,10 @@ return [
 
     ],
 
+    // 订单超时关闭时间
+    'order_ttl' => 1800,
+
+    // 内网穿透域名
     'ngrok_url' => env('NGROK_URL'),
 
 ];

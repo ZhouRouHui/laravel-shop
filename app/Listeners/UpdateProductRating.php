@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\OrderReviewed;
 use App\Models\OrderItem;
+use App\Events\OrderReviewed;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\DB;
 
 // implements ShouldQueue 代表这个事件处理器是异步的
 class UpdateProductRating implements ShouldQueue

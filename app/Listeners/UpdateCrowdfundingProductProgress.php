@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\OrderPaid;
 use App\Models\Order;
+use App\Events\OrderPaid;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\DB;
 
 class UpdateCrowdfundingProductProgress implements ShouldQueue
 {

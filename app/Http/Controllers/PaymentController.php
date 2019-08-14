@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OrderPaid;
-use App\Exceptions\InvalidRequestException;
-use App\Models\Order;
 use Carbon\Carbon;
+use App\Models\Order;
+use App\Events\OrderPaid;
 use Endroid\QrCode\QrCode;
 use Illuminate\Http\Request;
+use App\Exceptions\InvalidRequestException;
 
 class PaymentController extends Controller
 {
