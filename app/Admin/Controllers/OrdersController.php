@@ -252,6 +252,12 @@ class OrdersController extends Controller
         }
     }
 
+    /**
+     * 具体退款逻辑
+     *
+     * @param Order $order
+     * @throws InvalidRequestException
+     */
     public function _refundOrder(Order $order)
     {
         // 判断订单支付方式
@@ -266,7 +272,8 @@ class OrdersController extends Controller
                     'out_refund_no' => $refundNo, // 退款订单号
                     // 微信支付的退款结果并不是实时返回的，而是通过退款回调来通知，因此这里需要配上退款回调接口地址
                     //'notify_url' => route('payment.wechat.refund_notify'), // 由于是开发环境，需要配成 requestbin 地址
-                    'notify_url' => 'http://requestbin.net/r/1hka2h01' // 由于是开发环境，需要配成 requestbin 地址
+                    'notify_url' => ngrok_url('payment.wechat.refund_notify') // 使用 ngrok，可以外网直接访问，比 requestbin 方便
+                    // 'notify_url' => 'http://requestbin.net/r/1hka2h01' // requestbin，手动获取回调信息，然后在本地开发环境手动调用服务器回调接口
                 ]);
                 // 将订单状态改成退款中
                 $order->update([

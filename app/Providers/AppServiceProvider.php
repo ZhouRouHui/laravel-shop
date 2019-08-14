@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
         // 往服务容器中注入一个名为 alipay 的单例对象
         $this->app->singleton('alipay', function () {
             $config = config('pay.alipay');
-            $config['notify_url'] = route('payment.alipay.notify');
-            // requestbin 可以模仿支付回调接收
-            //$config['notify_url'] = 'http://requestbin.net/r/1hka2h01';
+            // $config['notify_url'] = route('payment.alipay.notify');
+            $config['notify_url'] = ngrok_url('payment.alipay.notify'); // 使用 ngrok 产生的临时外网域名获取支付回调
+            //$config['notify_url'] = 'http://requestbin.net/r/1hka2h01';   // requestbin 可以模仿支付回调接收
             $config['return_url'] = route('payment.alipay.return');
             // 判断当前项目运行环境是否为线上环境
             if (app()->environment() !== 'production') {
@@ -41,7 +41,8 @@ class AppServiceProvider extends ServiceProvider
         // 往服务容器中注入一个名为 wechat_pay 的单例对象
         $this->app->singleton('wechat_pay', function () {
             $config = config('pay.wechat');
-            $config['notify_url'] = route('payment.wechat.notify');
+            // $config['notify_url'] = route('payment.wechat.notify');
+            $config['notify_url'] = ngrok_url('payment.wechat.notify');
             if (app()->environment() !== 'production') {
                 $config['log']['level'] = Logger::DEBUG;
             } else {
