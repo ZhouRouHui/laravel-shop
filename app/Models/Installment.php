@@ -4,6 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Installment
+ * @package App\Models
+ * @property string $no
+ * @property string $total_amount
+ * @property string $count
+ * @property string $fee_rate
+ * @property string $fine_rate
+ * @property string $status
+ * @method static \Illuminate\Database\Eloquent\Builder|Installment get()
+ * @method static \Illuminate\Database\Eloquent\Builder|Installment find($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Installment whereUserId($value)
+ */
 class Installment extends Model
 {
     /**

@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     // 优惠券
     Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
 
+    // 分期付款列表
+    Route::get('installments', 'InstallmentsController@index')->name('installments.index');
+
 });
 
 // ----- 服务器段支付回调 start，回调接口为支付平台调用接口，不可放入有中间件的路由组中 -----
