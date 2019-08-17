@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     // 分期付款支付
     Route::get('installments/{installment}/alipay', 'InstallmentsController@payByAlipay')->name('installments.alipay');
     Route::get('installments/alipay/return', 'InstallmentsController@alipayReturn')->name('installments.alipay.return');
+    Route::get('installments/{installment}/wechat', 'InstallmentsController@payByWechat')->name('installments.wechat');
 
     // 优惠券
     Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
@@ -73,6 +74,7 @@ Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotif
 
 // 分期付款回调
 Route::post('installments/alipay/notify', 'InstallmentsController@alipayNotify')->name('installments.alipay.notify');
+Route::post('installments/wechat/notify', 'InstallmentsController@wechatNotify')->name('installments.wechat.notify');
 // ----- 服务器段支付回调 end   -----
 
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
