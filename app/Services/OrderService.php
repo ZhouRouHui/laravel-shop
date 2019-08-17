@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\RefundInstallmentOrder;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
@@ -179,6 +180,12 @@ class OrderService
         return $order;
     }
 
+    /**
+     * 订单退款
+     *
+     * @param Order $order
+     * @throws InternalException
+     */
     public function refundOrder(Order $order)
     {
         // 判断订单支付方式
@@ -229,6 +236,14 @@ class OrderService
                         'refund_status' => Order::REFUND_STATUS_SUCCESS,
                     ]);
                 }
+                break;
+            case 'installment':
+                $order->update([
+                    'refund_no' => Order::getAvailableRefundNo(), // 生成退款订单号
+                    'refund_status' => Order::REFUND_STATUS_PROCESSING, // 将退款状态改为退款中
+                ]);
+                // 触发退款异步任务
+                dispatch(new RefundInstallmentOrder($order));
                 break;
             default:
                 // 原则上不可能出现，这个只是为了代码健壮性
