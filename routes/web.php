@@ -53,6 +53,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::get('payment/{order}/wechat', 'PaymentController@payByWechat')->name('payment.wechat');
     Route::post('payment/{order}/installment', 'PaymentController@payByInstallment')->name('payment.installment');  // 分期付款
 
+    // 分期付款支付
+    Route::get('installments/{installment}/alipay', 'InstallmentsController@payByAlipay')->name('installments.alipay');
+    Route::get('installments/alipay/return', 'InstallmentsController@alipayReturn')->name('installments.alipay.return');
+
     // 优惠券
     Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
 
@@ -62,10 +66,13 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 
 });
 
-// ----- 服务器段支付回调 start，回调接口为支付平台调用接口，不可放入有中间件的路由组中 -----
+// ----- 服务器端支付回调 start，回调接口为支付平台调用接口，不可放入有中间件的路由组中 -----
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
 Route::post('payment/wechat/refund_notify', 'PaymentController@wechatRefundNotify')->name('payment.wechat.refund_notify');
+
+// 分期付款回调
+Route::post('installments/alipay/notify', 'InstallmentsController@alipayNotify')->name('installments.alipay.notify');
 // ----- 服务器段支付回调 end   -----
 
 Route::get('products/{product}', 'ProductsController@show')->name('products.show');
