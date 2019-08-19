@@ -5,6 +5,7 @@ namespace App\Providers;
 use Monolog\Logger;
 use Yansongda\Pay\Pay;
 use Illuminate\Support\ServiceProvider;
+use Elasticsearch\ClientBuilder as ESClientBuilder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         /**
+         * 支付配置
+         *
          * 1、$this->app->singleton() 往服务容器中注入一个单例对象，第一次从容器中取对象时会调用回调函数来生成对应的对象并保存到容器中，
          *    之后再去取的时候直接将容器中的对象返回。
          * 2、app()->environment() 获取当前运行的环境，线上环境会返回 production。对于支付宝，如果项目运行环境不是线上环境，
@@ -50,6 +53,21 @@ class AppServiceProvider extends ServiceProvider
             }
             // 调用 Yansongda\pay 来创建一个微信支付对象
             return Pay::wechat($config);
+        });
+
+        /**
+         * elasticsearch 配置
+         */
+        $this->app->singleton('es', function () {
+            // 从配置文件读取 Elasticsearch 服务器列表
+            $builder = ESClientBuilder::create()->setHosts(config('database.elasticsearch.hosts'));
+            // 如果是开发环境
+            if (app()->environment() == 'local') {
+                // 配置日志，Elasticsearch 的请求和返回数据将打印到日志文件中，方便测试
+                $builder->setLogger(app('log')->driver());
+            }
+
+            return $builder->build();
         });
     }
 
