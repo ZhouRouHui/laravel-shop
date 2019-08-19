@@ -75,4 +75,29 @@ class Product extends Model
     {
         return $this->hasOne(CrowdfundingProduct::class);
     }
+
+    /**
+     * 一对多关联商品属性
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function properties()
+    {
+        return $this->hasMany(ProductProperty::class);
+    }
+
+    /**
+     * 获取商品属性访问器
+     *
+     * @return mixed
+     */
+    public function getGroupedPropertiesAttribute()
+    {
+        return $this->properties
+            // 按照属性名聚合，返回的集合的 key 是属性名，value 是包含属性名的所有属性集合
+            ->groupBy('name')
+            ->map(function ($properties) {
+                // 使用 map 方法将属性集合变为属性值集合
+                return $properties->pluck('value')->all();
+            });
+    }
 }
