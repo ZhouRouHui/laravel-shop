@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
@@ -99,5 +100,36 @@ class Product extends Model
                 // 使用 map 方法将属性集合变为属性值集合
                 return $properties->pluck('value')->all();
             });
+    }
+
+    /**
+     * 将商品模型转换为 Elasticsearch 文档数组
+     *
+     * @return array
+     */
+    public function toESArray()
+    {
+        // 只取出需要的字段
+        $arr = Arr::only($this->toArray(), [
+            'id', 'type', 'title', 'category_id', 'long_title', 'on_sale',
+            'rating', 'sold_count', 'review_count', 'price',
+        ]);
+
+        // 如果商品有类目，则 category 字段为类目名数组，否则为空字符串
+        $arr['category'] = $this->category ? explode(' - ', $this->category->fullname) : '';
+        // 类目 path 字段
+        $arr['category_path'] = $this->category ? $this->category->path : '';
+        // strip_tags 函数可以将 html 标签去除
+        $arr['description'] = strip_tags($this->description);
+        // 只取出需要的 sku 字段
+        $arr['skus'] = $this->skus->map(function (ProductSku $sku) {
+            return Arr::only($sku->toArray(), ['title', 'description', 'price']);
+        });
+        // 只取出需要的商品属性字段
+        $arr['properties'] = $this->properties->map(function (ProductProperty $property) {
+            return Arr::only($property->toArray(), ['name', 'value']);
+        });
+
+        return $arr;
     }
 }
