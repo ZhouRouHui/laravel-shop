@@ -12,7 +12,8 @@
 */
 
 Route::redirect('/', '/products')->name('root');
-Route::get('products', 'ProductsController@index')->name('products.index');
+//Route::get('products', 'ProductsController@notEsIndex')->name('products.not_es_index');
+Route::get('products', 'ProductsController@esIndex')->name('products.index');
 
 // 加上 verify == true 的参数，系统会自动实现邮箱验证功能
 Auth::routes(['verify' => true]);

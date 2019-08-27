@@ -49,3 +49,123 @@ curl -XPOST -H'Content-Type:application/json' http://localhost:9200/test_index/_
 {
     "query" : { "match" : { "description" : "新品" }}
 }'
+
+
+# PHP elasticsearch/elasticsearch 使用
+# app('es')->get(['index' => 'test_index','type' => '_doc', 'id' => 1]) 获取某一个商品属性
+# app('es')->index(['id' => $arr['id'], 'index' => 'products', 'type' => '_doc', 'body' => $arr]);  将商品属性写入 es
+# app('es')->search($params); 进行查询
+
+# 词项查询
+#$params = [
+#    'index' => 'products',
+#    'type'  => '_doc',
+#    'body'  => [
+#        'query' => [
+#            'bool' => [
+#                'filter' => [
+#                    ['term' => ['on_sale' => true]],
+#                ],
+#            ],
+#        ],
+#    ],
+#];
+#app('es')->search($params);
+
+# 分页查询
+#$params = [
+#    'index' => 'products',
+#    'type'  => '_doc',
+#    'body'  => [
+#        'from'  => 0,
+#        'size'  => 5,
+#        'query' => [
+#            'bool' => [
+#                'filter' => [
+#                    ['term' => ['on_sale' => true]],
+#                ],
+#            ],
+#        ],
+#    ],
+#];
+#$results = app('es')->search($params);
+#count($results['hits']['hits']);
+#$results['hits']['total']
+
+# 排序
+#$params = [
+#    'index' => 'products',
+#    'type'  => '_doc',
+#    'body'  => [
+#        'from'  => 0,
+#        'size'  => 5,
+#        'query' => [
+#            'bool' => [
+#                'filter' => [
+#                    ['term' => ['on_sale' => true]],
+#                ],
+#            ],
+#        ],
+#        'sort' => [
+#            ['price' => 'desc']
+#        ],
+#    ],
+#];
+#$results = app('es')->search($params);
+#collect($results['hits']['hits'])->pluck('_source.price');
+
+# 多字段匹配查询
+#$params = [
+#    'index' => 'products',
+#    'type'  => '_doc',
+#    'body'  => [
+#        'query' => [
+#            'bool' => [
+#                'filter' => [
+#                    ['term' => ['on_sale' => true]],
+#                ],
+#                'must' => [
+#                    [
+#                        'multi_match' => [
+#                            'query'  => 'iPhone',
+#                            'fields' => [
+#                                'title^3',
+#                                'long_title^2',
+#                                'description',
+#                            ],
+#                        ],
+#                    ],
+#                ],
+#            ],
+#        ],
+#    ],
+#];
+#app('es')->search($params);
+
+# 多字段匹配查询支持 Nested（嵌套） 对象
+#$params = [
+#    'index' => 'products',
+#    'type'  => '_doc',
+#    'body'  => [
+#        'query' => [
+#            'bool' => [
+#                'filter' => [
+#                    ['term' => ['on_sale' => true]],
+#                ],
+#                'must' => [
+#                    [
+#                        'multi_match' => [
+#                            'query'  => '256G',
+#                            'fields' => [
+#                                'skus.title',
+#                                'skus.description',
+#                                'properties.value',
+#                            ],
+#                        ],
+#                    ],
+#                ],
+#            ],
+#        ],
+#    ],
+#];
+#app('es')->search($params);
