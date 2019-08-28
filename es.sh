@@ -30,6 +30,9 @@ curl -XPUT http://localhost:9200/test_index
 curl http://localhost:9200/test_index
 curl http://localhost:9200/test_index?pretty  # 格式化 json 信息展示结果
 
+# 查看一个别名所指向的索引，接口地址 /_alias/{index_alias}?pretty
+curl http://localhost:9200/_alias/products?pretty
+
 # 在 index 中创建 type，接口地址 /{index_name}/_mapping/{type_name}
 curl -H'Content-Type: application/json' -XPUT http://localhost:9200/test_index/_mapping/_doc?pretty -d'{
   "properties": {
