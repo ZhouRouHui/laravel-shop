@@ -14,6 +14,12 @@ sudo systemctl stop elasticsearch.service
 # 关闭 es 开机启动
 sudo systemctl disable elasticsearch.service
 
+# 开启索引，接口地址 /{index_name}/_open
+curl -XPOST http://localhost:9200/products/_open?pretty
+
+# 关闭索引，接口地址 /{index_name}/_close
+curl -XPOST http://localhost:9200/products/_close?pretty
+
 # 查看 index 中一个 type 有多少个文档，接口地址 /{index_name}/{type_name}/_count
 curl http://localhost:9200/products/_doc/_count?pretty
 
