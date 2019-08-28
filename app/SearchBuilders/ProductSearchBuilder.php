@@ -139,11 +139,12 @@ class ProductSearchBuilder
      *
      * @param $name
      * @param $value
+     * @param string $type
      * @return $this
      */
-    public function propertyFilter($name, $value)
+    public function propertyFilter($name, $value, $type = 'filter')
     {
-        $this->params['body']['query']['bool']['filter'][] = [
+        $this->params['body']['query']['bool'][$type][] = [
             // 由于我们要筛选的是 nested 类型下的属性，因此我们需要用 nested 查询
             'nested' => [
                 // 指明 nested 字段
@@ -153,6 +154,19 @@ class ProductSearchBuilder
                 ],
             ],
         ];
+
+        return $this;
+    }
+
+    /**
+     * 设置 minimum_should_match 参数
+     *
+     * @param $count
+     * @return $this
+     */
+    public function minShouldMatch($count)
+    {
+        $this->params['body']['query']['bool']['minimum_should_match'] = (int) $count;
 
         return $this;
     }

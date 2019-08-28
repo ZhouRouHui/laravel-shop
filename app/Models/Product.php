@@ -133,4 +133,17 @@ class Product extends Model
 
         return $arr;
     }
+
+    /**
+     * 通过 id 按排序查询商品
+     *
+     * @param $query
+     * @param $ids
+     * @return mixed
+     */
+    public function scopeByIds($query, $ids)
+    {
+        // orderByRaw 可以让我们用原生的 sql 来给查询结果排序
+        return $query->whereIn('id', $ids)->orderByRaw(sprintf("FIND_IN_SET(id, '%s')", join(',', $ids)));
+    }
 }
